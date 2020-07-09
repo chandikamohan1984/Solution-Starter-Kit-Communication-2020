@@ -1,0 +1,1347 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import seaborn as sns\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "diabetes_df = pd.read_csv('https://raw.githubusercontent.com/ammishra08/MachineLearning/master/Datasets/diabetes.csv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Pregnancies</th>\n",
+       "      <th>Glucose</th>\n",
+       "      <th>BloodPressure</th>\n",
+       "      <th>SkinThickness</th>\n",
+       "      <th>Insulin</th>\n",
+       "      <th>BMI</th>\n",
+       "      <th>DiabetesPedigreeFunction</th>\n",
+       "      <th>Age</th>\n",
+       "      <th>Outcome</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>6</td>\n",
+       "      <td>148</td>\n",
+       "      <td>72</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0</td>\n",
+       "      <td>33.6</td>\n",
+       "      <td>0.627</td>\n",
+       "      <td>50</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>85</td>\n",
+       "      <td>66</td>\n",
+       "      <td>29</td>\n",
+       "      <td>0</td>\n",
+       "      <td>26.6</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>31</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>8</td>\n",
+       "      <td>183</td>\n",
+       "      <td>64</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>23.3</td>\n",
+       "      <td>0.672</td>\n",
+       "      <td>32</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>89</td>\n",
+       "      <td>66</td>\n",
+       "      <td>23</td>\n",
+       "      <td>94</td>\n",
+       "      <td>28.1</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>21</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>0</td>\n",
+       "      <td>137</td>\n",
+       "      <td>40</td>\n",
+       "      <td>35</td>\n",
+       "      <td>168</td>\n",
+       "      <td>43.1</td>\n",
+       "      <td>2.288</td>\n",
+       "      <td>33</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Pregnancies  Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+       "0            6      148             72             35        0  33.6   \n",
+       "1            1       85             66             29        0  26.6   \n",
+       "2            8      183             64              0        0  23.3   \n",
+       "3            1       89             66             23       94  28.1   \n",
+       "4            0      137             40             35      168  43.1   \n",
+       "\n",
+       "   DiabetesPedigreeFunction  Age  Outcome  \n",
+       "0                     0.627   50        1  \n",
+       "1                     0.351   31        0  \n",
+       "2                     0.672   32        1  \n",
+       "3                     0.167   21        0  \n",
+       "4                     2.288   33        1  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Pregnancies                 0\n",
+       "Glucose                     0\n",
+       "BloodPressure               0\n",
+       "SkinThickness               0\n",
+       "Insulin                     0\n",
+       "BMI                         0\n",
+       "DiabetesPedigreeFunction    0\n",
+       "Age                         0\n",
+       "Outcome                     0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_df.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Pregnancies</th>\n",
+       "      <th>Glucose</th>\n",
+       "      <th>BloodPressure</th>\n",
+       "      <th>SkinThickness</th>\n",
+       "      <th>Insulin</th>\n",
+       "      <th>BMI</th>\n",
+       "      <th>DiabetesPedigreeFunction</th>\n",
+       "      <th>Age</th>\n",
+       "      <th>Outcome</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>6</td>\n",
+       "      <td>148</td>\n",
+       "      <td>72</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0</td>\n",
+       "      <td>33.6</td>\n",
+       "      <td>0.627</td>\n",
+       "      <td>50</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>85</td>\n",
+       "      <td>66</td>\n",
+       "      <td>29</td>\n",
+       "      <td>0</td>\n",
+       "      <td>26.6</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>31</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>8</td>\n",
+       "      <td>183</td>\n",
+       "      <td>64</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>23.3</td>\n",
+       "      <td>0.672</td>\n",
+       "      <td>32</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>1</td>\n",
+       "      <td>89</td>\n",
+       "      <td>66</td>\n",
+       "      <td>23</td>\n",
+       "      <td>94</td>\n",
+       "      <td>28.1</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>21</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>0</td>\n",
+       "      <td>137</td>\n",
+       "      <td>40</td>\n",
+       "      <td>35</td>\n",
+       "      <td>168</td>\n",
+       "      <td>43.1</td>\n",
+       "      <td>2.288</td>\n",
+       "      <td>33</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>763</th>\n",
+       "      <td>10</td>\n",
+       "      <td>101</td>\n",
+       "      <td>76</td>\n",
+       "      <td>48</td>\n",
+       "      <td>180</td>\n",
+       "      <td>32.9</td>\n",
+       "      <td>0.171</td>\n",
+       "      <td>63</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>764</th>\n",
+       "      <td>2</td>\n",
+       "      <td>122</td>\n",
+       "      <td>70</td>\n",
+       "      <td>27</td>\n",
+       "      <td>0</td>\n",
+       "      <td>36.8</td>\n",
+       "      <td>0.340</td>\n",
+       "      <td>27</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>765</th>\n",
+       "      <td>5</td>\n",
+       "      <td>121</td>\n",
+       "      <td>72</td>\n",
+       "      <td>23</td>\n",
+       "      <td>112</td>\n",
+       "      <td>26.2</td>\n",
+       "      <td>0.245</td>\n",
+       "      <td>30</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>766</th>\n",
+       "      <td>1</td>\n",
+       "      <td>126</td>\n",
+       "      <td>60</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>30.1</td>\n",
+       "      <td>0.349</td>\n",
+       "      <td>47</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>767</th>\n",
+       "      <td>1</td>\n",
+       "      <td>93</td>\n",
+       "      <td>70</td>\n",
+       "      <td>31</td>\n",
+       "      <td>0</td>\n",
+       "      <td>30.4</td>\n",
+       "      <td>0.315</td>\n",
+       "      <td>23</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>768 rows × 9 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Pregnancies  Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+       "0              6      148             72             35        0  33.6   \n",
+       "1              1       85             66             29        0  26.6   \n",
+       "2              8      183             64              0        0  23.3   \n",
+       "3              1       89             66             23       94  28.1   \n",
+       "4              0      137             40             35      168  43.1   \n",
+       "..           ...      ...            ...            ...      ...   ...   \n",
+       "763           10      101             76             48      180  32.9   \n",
+       "764            2      122             70             27        0  36.8   \n",
+       "765            5      121             72             23      112  26.2   \n",
+       "766            1      126             60              0        0  30.1   \n",
+       "767            1       93             70             31        0  30.4   \n",
+       "\n",
+       "     DiabetesPedigreeFunction  Age  Outcome  \n",
+       "0                       0.627   50        1  \n",
+       "1                       0.351   31        0  \n",
+       "2                       0.672   32        1  \n",
+       "3                       0.167   21        0  \n",
+       "4                       2.288   33        1  \n",
+       "..                        ...  ...      ...  \n",
+       "763                     0.171   63        0  \n",
+       "764                     0.340   27        0  \n",
+       "765                     0.245   30        0  \n",
+       "766                     0.349   47        1  \n",
+       "767                     0.315   23        0  \n",
+       "\n",
+       "[768 rows x 9 columns]"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_df"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Data Manipulation"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X = diabetes_df.drop(['Pregnancies', 'Outcome'], axis = 1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Glucose</th>\n",
+       "      <th>BloodPressure</th>\n",
+       "      <th>SkinThickness</th>\n",
+       "      <th>Insulin</th>\n",
+       "      <th>BMI</th>\n",
+       "      <th>DiabetesPedigreeFunction</th>\n",
+       "      <th>Age</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>148</td>\n",
+       "      <td>72</td>\n",
+       "      <td>35</td>\n",
+       "      <td>0</td>\n",
+       "      <td>33.6</td>\n",
+       "      <td>0.627</td>\n",
+       "      <td>50</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>85</td>\n",
+       "      <td>66</td>\n",
+       "      <td>29</td>\n",
+       "      <td>0</td>\n",
+       "      <td>26.6</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>183</td>\n",
+       "      <td>64</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>23.3</td>\n",
+       "      <td>0.672</td>\n",
+       "      <td>32</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>89</td>\n",
+       "      <td>66</td>\n",
+       "      <td>23</td>\n",
+       "      <td>94</td>\n",
+       "      <td>28.1</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>21</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>137</td>\n",
+       "      <td>40</td>\n",
+       "      <td>35</td>\n",
+       "      <td>168</td>\n",
+       "      <td>43.1</td>\n",
+       "      <td>2.288</td>\n",
+       "      <td>33</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>763</th>\n",
+       "      <td>101</td>\n",
+       "      <td>76</td>\n",
+       "      <td>48</td>\n",
+       "      <td>180</td>\n",
+       "      <td>32.9</td>\n",
+       "      <td>0.171</td>\n",
+       "      <td>63</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>764</th>\n",
+       "      <td>122</td>\n",
+       "      <td>70</td>\n",
+       "      <td>27</td>\n",
+       "      <td>0</td>\n",
+       "      <td>36.8</td>\n",
+       "      <td>0.340</td>\n",
+       "      <td>27</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>765</th>\n",
+       "      <td>121</td>\n",
+       "      <td>72</td>\n",
+       "      <td>23</td>\n",
+       "      <td>112</td>\n",
+       "      <td>26.2</td>\n",
+       "      <td>0.245</td>\n",
+       "      <td>30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>766</th>\n",
+       "      <td>126</td>\n",
+       "      <td>60</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>30.1</td>\n",
+       "      <td>0.349</td>\n",
+       "      <td>47</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>767</th>\n",
+       "      <td>93</td>\n",
+       "      <td>70</td>\n",
+       "      <td>31</td>\n",
+       "      <td>0</td>\n",
+       "      <td>30.4</td>\n",
+       "      <td>0.315</td>\n",
+       "      <td>23</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>768 rows × 7 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+       "0        148             72             35        0  33.6   \n",
+       "1         85             66             29        0  26.6   \n",
+       "2        183             64              0        0  23.3   \n",
+       "3         89             66             23       94  28.1   \n",
+       "4        137             40             35      168  43.1   \n",
+       "..       ...            ...            ...      ...   ...   \n",
+       "763      101             76             48      180  32.9   \n",
+       "764      122             70             27        0  36.8   \n",
+       "765      121             72             23      112  26.2   \n",
+       "766      126             60              0        0  30.1   \n",
+       "767       93             70             31        0  30.4   \n",
+       "\n",
+       "     DiabetesPedigreeFunction  Age  \n",
+       "0                       0.627   50  \n",
+       "1                       0.351   31  \n",
+       "2                       0.672   32  \n",
+       "3                       0.167   21  \n",
+       "4                       2.288   33  \n",
+       "..                        ...  ...  \n",
+       "763                     0.171   63  \n",
+       "764                     0.340   27  \n",
+       "765                     0.245   30  \n",
+       "766                     0.349   47  \n",
+       "767                     0.315   23  \n",
+       "\n",
+       "[768 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X.replace(0, np.nan, inplace=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Glucose                       5\n",
+       "BloodPressure                35\n",
+       "SkinThickness               227\n",
+       "Insulin                     374\n",
+       "BMI                          11\n",
+       "DiabetesPedigreeFunction      0\n",
+       "Age                           0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Simple Imputer\n",
+    "\n",
+    "* It replaces np.nan (missing values with mean/median/mode)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.impute import SimpleImputer\n",
+    "imputer = SimpleImputer(strategy='median')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "diabetes_array = imputer.fit_transform(X)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[148.   ,  72.   ,  35.   , ...,  33.6  ,   0.627,  50.   ],\n",
+       "       [ 85.   ,  66.   ,  29.   , ...,  26.6  ,   0.351,  31.   ],\n",
+       "       [183.   ,  64.   ,  29.   , ...,  23.3  ,   0.672,  32.   ],\n",
+       "       ...,\n",
+       "       [121.   ,  72.   ,  23.   , ...,  26.2  ,   0.245,  30.   ],\n",
+       "       [126.   ,  60.   ,  29.   , ...,  30.1  ,   0.349,  47.   ],\n",
+       "       [ 93.   ,  70.   ,  31.   , ...,  30.4  ,   0.315,  23.   ]])"
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_array"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "diabetes_df2 = pd.DataFrame(diabetes_array, columns= X.columns)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Glucose</th>\n",
+       "      <th>BloodPressure</th>\n",
+       "      <th>SkinThickness</th>\n",
+       "      <th>Insulin</th>\n",
+       "      <th>BMI</th>\n",
+       "      <th>DiabetesPedigreeFunction</th>\n",
+       "      <th>Age</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>148.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>35.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>33.6</td>\n",
+       "      <td>0.627</td>\n",
+       "      <td>50.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>85.0</td>\n",
+       "      <td>66.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>26.6</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>31.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>183.0</td>\n",
+       "      <td>64.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>23.3</td>\n",
+       "      <td>0.672</td>\n",
+       "      <td>32.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>89.0</td>\n",
+       "      <td>66.0</td>\n",
+       "      <td>23.0</td>\n",
+       "      <td>94.0</td>\n",
+       "      <td>28.1</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>21.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>137.0</td>\n",
+       "      <td>40.0</td>\n",
+       "      <td>35.0</td>\n",
+       "      <td>168.0</td>\n",
+       "      <td>43.1</td>\n",
+       "      <td>2.288</td>\n",
+       "      <td>33.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>763</th>\n",
+       "      <td>101.0</td>\n",
+       "      <td>76.0</td>\n",
+       "      <td>48.0</td>\n",
+       "      <td>180.0</td>\n",
+       "      <td>32.9</td>\n",
+       "      <td>0.171</td>\n",
+       "      <td>63.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>764</th>\n",
+       "      <td>122.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>27.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>36.8</td>\n",
+       "      <td>0.340</td>\n",
+       "      <td>27.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>765</th>\n",
+       "      <td>121.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>23.0</td>\n",
+       "      <td>112.0</td>\n",
+       "      <td>26.2</td>\n",
+       "      <td>0.245</td>\n",
+       "      <td>30.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>766</th>\n",
+       "      <td>126.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>30.1</td>\n",
+       "      <td>0.349</td>\n",
+       "      <td>47.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>767</th>\n",
+       "      <td>93.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>31.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>30.4</td>\n",
+       "      <td>0.315</td>\n",
+       "      <td>23.0</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>768 rows × 7 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+       "0      148.0           72.0           35.0    125.0  33.6   \n",
+       "1       85.0           66.0           29.0    125.0  26.6   \n",
+       "2      183.0           64.0           29.0    125.0  23.3   \n",
+       "3       89.0           66.0           23.0     94.0  28.1   \n",
+       "4      137.0           40.0           35.0    168.0  43.1   \n",
+       "..       ...            ...            ...      ...   ...   \n",
+       "763    101.0           76.0           48.0    180.0  32.9   \n",
+       "764    122.0           70.0           27.0    125.0  36.8   \n",
+       "765    121.0           72.0           23.0    112.0  26.2   \n",
+       "766    126.0           60.0           29.0    125.0  30.1   \n",
+       "767     93.0           70.0           31.0    125.0  30.4   \n",
+       "\n",
+       "     DiabetesPedigreeFunction   Age  \n",
+       "0                       0.627  50.0  \n",
+       "1                       0.351  31.0  \n",
+       "2                       0.672  32.0  \n",
+       "3                       0.167  21.0  \n",
+       "4                       2.288  33.0  \n",
+       "..                        ...   ...  \n",
+       "763                     0.171  63.0  \n",
+       "764                     0.340  27.0  \n",
+       "765                     0.245  30.0  \n",
+       "766                     0.349  47.0  \n",
+       "767                     0.315  23.0  \n",
+       "\n",
+       "[768 rows x 7 columns]"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_df2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "diabetes_df2 = pd.concat([diabetes_df2, diabetes_df['Pregnancies']], axis=1)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Glucose</th>\n",
+       "      <th>BloodPressure</th>\n",
+       "      <th>SkinThickness</th>\n",
+       "      <th>Insulin</th>\n",
+       "      <th>BMI</th>\n",
+       "      <th>DiabetesPedigreeFunction</th>\n",
+       "      <th>Age</th>\n",
+       "      <th>Pregnancies</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>148.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>35.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>33.6</td>\n",
+       "      <td>0.627</td>\n",
+       "      <td>50.0</td>\n",
+       "      <td>6</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>85.0</td>\n",
+       "      <td>66.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>26.6</td>\n",
+       "      <td>0.351</td>\n",
+       "      <td>31.0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>183.0</td>\n",
+       "      <td>64.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>23.3</td>\n",
+       "      <td>0.672</td>\n",
+       "      <td>32.0</td>\n",
+       "      <td>8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>89.0</td>\n",
+       "      <td>66.0</td>\n",
+       "      <td>23.0</td>\n",
+       "      <td>94.0</td>\n",
+       "      <td>28.1</td>\n",
+       "      <td>0.167</td>\n",
+       "      <td>21.0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>137.0</td>\n",
+       "      <td>40.0</td>\n",
+       "      <td>35.0</td>\n",
+       "      <td>168.0</td>\n",
+       "      <td>43.1</td>\n",
+       "      <td>2.288</td>\n",
+       "      <td>33.0</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>763</th>\n",
+       "      <td>101.0</td>\n",
+       "      <td>76.0</td>\n",
+       "      <td>48.0</td>\n",
+       "      <td>180.0</td>\n",
+       "      <td>32.9</td>\n",
+       "      <td>0.171</td>\n",
+       "      <td>63.0</td>\n",
+       "      <td>10</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>764</th>\n",
+       "      <td>122.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>27.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>36.8</td>\n",
+       "      <td>0.340</td>\n",
+       "      <td>27.0</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>765</th>\n",
+       "      <td>121.0</td>\n",
+       "      <td>72.0</td>\n",
+       "      <td>23.0</td>\n",
+       "      <td>112.0</td>\n",
+       "      <td>26.2</td>\n",
+       "      <td>0.245</td>\n",
+       "      <td>30.0</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>766</th>\n",
+       "      <td>126.0</td>\n",
+       "      <td>60.0</td>\n",
+       "      <td>29.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>30.1</td>\n",
+       "      <td>0.349</td>\n",
+       "      <td>47.0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>767</th>\n",
+       "      <td>93.0</td>\n",
+       "      <td>70.0</td>\n",
+       "      <td>31.0</td>\n",
+       "      <td>125.0</td>\n",
+       "      <td>30.4</td>\n",
+       "      <td>0.315</td>\n",
+       "      <td>23.0</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>768 rows × 8 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Glucose  BloodPressure  SkinThickness  Insulin   BMI  \\\n",
+       "0      148.0           72.0           35.0    125.0  33.6   \n",
+       "1       85.0           66.0           29.0    125.0  26.6   \n",
+       "2      183.0           64.0           29.0    125.0  23.3   \n",
+       "3       89.0           66.0           23.0     94.0  28.1   \n",
+       "4      137.0           40.0           35.0    168.0  43.1   \n",
+       "..       ...            ...            ...      ...   ...   \n",
+       "763    101.0           76.0           48.0    180.0  32.9   \n",
+       "764    122.0           70.0           27.0    125.0  36.8   \n",
+       "765    121.0           72.0           23.0    112.0  26.2   \n",
+       "766    126.0           60.0           29.0    125.0  30.1   \n",
+       "767     93.0           70.0           31.0    125.0  30.4   \n",
+       "\n",
+       "     DiabetesPedigreeFunction   Age  Pregnancies  \n",
+       "0                       0.627  50.0            6  \n",
+       "1                       0.351  31.0            1  \n",
+       "2                       0.672  32.0            8  \n",
+       "3                       0.167  21.0            1  \n",
+       "4                       2.288  33.0            0  \n",
+       "..                        ...   ...          ...  \n",
+       "763                     0.171  63.0           10  \n",
+       "764                     0.340  27.0            2  \n",
+       "765                     0.245  30.0            5  \n",
+       "766                     0.349  47.0            1  \n",
+       "767                     0.315  23.0            1  \n",
+       "\n",
+       "[768 rows x 8 columns]"
+      ]
+     },
+     "execution_count": 27,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "diabetes_df2"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Y = diabetes_df['Outcome']"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Cross Validation "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import train_test_split\n",
+    "X_train, X_test, Y_train, Y_test = train_test_split(diabetes_df2, Y, test_size = 0.2, random_state = 0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Logistic Algorithm"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import LogisticRegression\n",
+    "# penalty = to avoid overfitting\n",
+    "logit_reg = LogisticRegression(solver='liblinear', max_iter= 1e9, C = 1e8, penalty='l1') "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "LogisticRegression(C=100000000.0, class_weight=None, dual=False,\n",
+       "                   fit_intercept=True, intercept_scaling=1, l1_ratio=None,\n",
+       "                   max_iter=1000000000.0, multi_class='auto', n_jobs=None,\n",
+       "                   penalty='l1', random_state=None, solver='liblinear',\n",
+       "                   tol=0.0001, verbose=0, warm_start=False)"
+      ]
+     },
+     "execution_count": 56,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logit_reg.fit(X_train, Y_train) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.8116883116883117"
+      ]
+     },
+     "execution_count": 57,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logit_reg.score(X_test, Y_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "yhat = logit_reg.predict(X_test)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 61,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0,\n",
+       "       0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,\n",
+       "       1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 1,\n",
+       "       1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+       "       1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,\n",
+       "       0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n",
+       "       0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],\n",
+       "      dtype=int64)"
+      ]
+     },
+     "execution_count": 61,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "## Predictions for Test Data\n",
+    "yhat"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Classification Report "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 60,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([[97, 10],\n",
+       "       [19, 28]], dtype=int64)"
+      ]
+     },
+     "execution_count": 60,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "from sklearn.metrics import confusion_matrix\n",
+    "confusion_matrix(Y_test, yhat)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.axes._subplots.AxesSubplot at 0x133ddfb0808>"
+      ]
+     },
+     "execution_count": 63,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 2 Axes>"
+      ]
+     },
+     "metadata": {
+      "needs_background": "light"
+     },
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "sns.heatmap(confusion_matrix(Y_test, yhat), annot=True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 69,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "array([0], dtype=int64)"
+      ]
+     },
+     "execution_count": 69,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "logit_reg.predict([[51.0, 72.0, 35.0, 101.0, 33.6, 0.627, 32.0, 1]])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.6"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
